@@ -1,15 +1,19 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+    margin: 0;
+    overflow: hidden;
 }
 
-#canvas-container {
-    margin-top: 20px;
-    width: 600px;
-    height: 400px;
+canvas {
+    display: block;
+    background: #f0f0f0;
+    border: 1px solid #000;
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
     border: 1px solid #ccc;
-    background-color: #fff;
-    position: relative;
-    overflow: hidden;
 }
