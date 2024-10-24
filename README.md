@@ -1,8 +1,8 @@
-# Atwood's Machine Simulation App
+# General Physics Visualizer
 Overview
-The Atwood's Machine Simulation App is an interactive tool that visualizes the mechanics of the Atwood's machine, allowing users to explore the effects of different mass values on the system's motion. This app serves as an educational resource for students and educators to understand fundamental physics concepts.
+The General Physics Visualizer is an interactive application designed to help users explore and understand various concepts in physics through dynamic visualizations. This tool aims to provide an engaging learning experience by allowing users to manipulate parameters and observe the effects in real-time. The app currently features an Atwood's machine simulation, with plans to expand to include additional physics phenomena.
 
 Features
-Interactive Mass Input: Users can input different mass values for two connected weights.
-Dynamic Animation: Visual representation of the masses and ropes in motion, demonstrating the principles of acceleration and tension.
-Clear Visualization: Easy-to-understand graphics that illustrate the behavior of the Atwood's machine
+-  Interactive Simulations: Users can input different parameters to see how they affect the system's behavior.
+-  Dynamic Animations: Visual representations of various physics concepts, making learning intuitive and engaging.
+-  Expandable Framework: Designed to easily incorporate additional visualizations and physics concepts in the future.
