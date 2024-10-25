@@ -1,92 +1,140 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const pulleyRadius = 50;
-const mass1X = 100;
-const mass2X = 250;
+const pulleyRadius = 30;
+const massSize = 40;
+const ropeWidth = 2;
 const pulleyY = 100;
-const ropeColor = '#000080';
-const massColor = '#FFFFFF';
+const gravity = 9.81;
 
-let mass1 = 5; // Default mass 1
-let mass2 = 5; // Default mass 2
-let position1 = 300; // Initial position of mass 1
-let position2 = 300; // Initial position of mass 2
-let animationFrame; // To store the animation frame
-function drawAtwoodsMachine() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+let mass1 = 5;
+let mass2 = 5;
+let position1, position2;
+let velocity = 0;
+let acceleration = 0;
+let angle = 0;
+let animationId;
+let isPlaying = false;
+let speedFactor = 1;
 
-    // Draw the pulley
+function drawPulley() {
+    ctx.save();
+    ctx.translate(canvas.width / 2, pulleyY);
+    ctx.rotate(angle);
     ctx.beginPath();
-    ctx.arc(mass1X + (mass2X - mass1X) / 2, pulleyY, pulleyRadius, 0, 2 * Math.PI);
-    ctx.fillStyle = '#800080';
+    ctx.arc(0, 0, pulleyRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#4a90e2';
     ctx.fill();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#2c3e50';
+    ctx.lineWidth = 2;
     ctx.stroke();
-
-    // Draw the ropes
     ctx.beginPath();
-    ctx.moveTo(mass1X, pulleyY); // Connect to the pulley
-    ctx.lineTo(mass1X, position1 + 25); // Connect to the bottom of the mass
-    ctx.strokeStyle = ropeColor;
+    ctx.moveTo(0, 0);
+    ctx.lineTo(pulleyRadius, 0);
+    ctx.strokeStyle = '#2c3e50';
     ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(mass2X, pulleyY); // Connect to the pulley
-    ctx.lineTo(mass2X, position2 + 25); // Connect to the bottom of the mass
-    ctx.strokeStyle = ropeColor;
-    ctx.stroke();
-
-    // Draw the masses
-    drawMass(mass1X, position1, mass1, 'm1');
-    drawMass(mass2X, position2, mass2, 'm2');
+    ctx.restore();
 }
 
+function drawRope() {
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - pulleyRadius, pulleyY);
+    ctx.lineTo(canvas.width / 4, position1);
+    ctx.moveTo(canvas.width / 2 + pulleyRadius, pulleyY);
+    ctx.lineTo(3 * canvas.width / 4, position2);
+    ctx.strokeStyle = '#8e44ad';
+    ctx.lineWidth = ropeWidth;
+    ctx.stroke();
+}
 
-// Function to draw a mass
 function drawMass(x, y, mass, label) {
     ctx.beginPath();
-    ctx.rect(x - 25, y - 25, 50, 50);
-    ctx.fillStyle = massColor;
+    ctx.rect(x - massSize / 2, y - massSize / 2, massSize, massSize);
+    ctx.fillStyle = '#e74c3c';
     ctx.fill();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#c0392b';
+    ctx.lineWidth = 2;
     ctx.stroke();
-    ctx.font = 'bold 24px sans-serif';
-    ctx.textAlign = 'center'; // Center the text horizontally
-    ctx.textBaseline = 'middle'; // Center the text vertically
+    ctx.fillStyle = 'white';
+    ctx.font = '16px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
     ctx.fillText(label, x, y);
 }
-// Function to animate the Atwood's machine
+
+function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRope();
+    drawPulley();
+    drawMass(canvas.width / 4, position1, mass1, 'm1');
+    drawMass(3 * canvas.width / 4, position2, mass2, 'm2');
+}
+
+function updatePhysics() {
+    acceleration = ((mass2 - mass1) / (mass1 + mass2)) * gravity;
+    velocity += acceleration * 0.016 * speedFactor; // Assuming 60 FPS
+    const displacement = velocity * 0.016 * speedFactor;
+    position1 += displacement;
+    position2 -= displacement;
+    angle -= displacement / pulleyRadius;
+
+    // Stop if either mass reaches the pulley
+    if (position1 <= pulleyY + massSize / 2 || position2 <= pulleyY + massSize / 2) {
+        isPlaying = false;
+    }
+}
+
+function updatePhysicsInfo() {
+    const tension = (2 * mass1 * mass2 * gravity) / (mass1 + mass2);
+    const infoElement = document.getElementById('physicsInfo');
+    infoElement.innerHTML = `
+        <h4>Physics Information:</h4>
+        <p>Acceleration: ${acceleration.toFixed(2)} m/s²</p>
+        <p>Velocity: ${velocity.toFixed(2)} m/s</p>
+        <p>Tension: ${tension.toFixed(2)} N</p>
+    `;
+}
+
 function animate() {
+    if (!isPlaying) return;
+
+    updatePhysics();
+    drawScene();
+    updatePhysicsInfo();
+
+    animationId = requestAnimationFrame(animate);
+}
+
+function toggleAnimation() {
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+        animate();
+    } else {
+        cancelAnimationFrame(animationId);
+    }
+}
+
+function resetSimulation() {
     mass1 = parseFloat(document.getElementById('mass1').value);
     mass2 = parseFloat(document.getElementById('mass2').value);
-    
-    // Reset positions
-    position1 = 300;
-    position2 = 300;
-
-    // Start the animation loop
-    function animationLoop() {
-        // Calculate acceleration based on mass difference
-        const acceleration = (mass2 - mass1) * 0.1; // Adjust the factor for speed
-
-        // Update positions based on acceleration
-        position1 -= acceleration;
-        position2 += acceleration;
-
-        // Stop the masses when they reach the pulley level
-        if (position1 <= pulleyY - 25) {
-            position1 = pulleyY - 25; // Stop at the pulley level
-        }
-        if (position2 <= pulleyY - 25) {
-            position2 = pulleyY - 25; // Stop at the pulley level
-        }
-
-        drawAtwoodsMachine();
-        animationFrame = requestAnimationFrame(animationLoop);
-    }
-
-    animationLoop(); // Start the animation loop
+    position1 = canvas.height - massSize / 2;
+    position2 = canvas.height - massSize / 2;
+    velocity = 0;
+    acceleration = 0;
+    angle = 0;
+    isPlaying = false;
+    cancelAnimationFrame(animationId);
+    drawScene();
+    updatePhysicsInfo();
 }
-// Event listener for the animate button
-document.getElementById('animate').addEventListener('click', animate);
+
+document.getElementById('playPause').addEventListener('click', toggleAnimation);
+document.getElementById('reset').addEventListener('click', resetSimulation);
+document.getElementById('speedControl').addEventListener('input', (e) => {
+    speedFactor = parseFloat(e.target.value);
+});
+document.getElementById('mass1').addEventListener('input', resetSimulation);
+document.getElementById('mass2').addEventListener('input', resetSimulation);
+
+// Initial setup
+resetSimulation();

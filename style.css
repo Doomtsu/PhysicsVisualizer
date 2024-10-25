@@ -1,19 +1,64 @@
 body {
-    margin: 0;
+    background-color: #f0f5ff;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.canvas-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-canvas {
-    display: block;
-    background: #f0f0f0;
-    border: 1px solid #000;
+.control-panel {
+    background-color: #e6eeff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-#controls {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: white;
-    padding: 10px;
-    border: 1px solid #ccc;
+.btn-primary {
+    background-color: #4a90e2;
+    border-color: #4a90e2;
+}
+
+.btn-primary:hover {
+    background-color: #3a7bc8;
+    border-color: #3a7bc8;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+#canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+#physicsInfo {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-range::-webkit-slider-thumb {
+    background: #4a90e2;
+}
+
+.form-range::-moz-range-thumb {
+    background: #4a90e2;
+}
+
+.form-range::-ms-thumb {
+    background: #4a90e2;
 }
