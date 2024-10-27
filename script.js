@@ -6,8 +6,10 @@ const massSize = 40;
 const ropeWidth = 2;
 const pulleyY = 100;
 const gravity = 9.81;
+const themeToggleButton = document.getElementById('themeToggle');
 
-let mass1 = 5;
+
+let mass1 = 10;
 let mass2 = 5;
 let position1, position2;
 let velocity = 0;
@@ -15,7 +17,8 @@ let acceleration = 0;
 let angle = 0;
 let animationId;
 let isPlaying = false;
-let speedFactor = 1;
+let speedFactor = 9.81;
+
 
 function drawPulley() {
     ctx.save();
@@ -71,11 +74,11 @@ function drawScene() {
 }
 
 function updatePhysics() {
-    acceleration = ((mass2 - mass1) / (mass1 + mass2)) * gravity;
-    velocity += acceleration * 0.016 * speedFactor; // Assuming 60 FPS
-    const displacement = velocity * 0.016 * speedFactor;
-    position1 += displacement;
-    position2 -= displacement;
+    acceleration = ((mass2 - mass1) / (mass1 + mass2)) * speedFactor;
+    velocity += acceleration * 0.001 * speedFactor; // Assuming 60 FPS
+    const displacement = velocity * 0.001 * speedFactor;
+    position1 -= displacement;
+    position2 += displacement;
     angle -= displacement / pulleyRadius;
 
     // Stop if either mass reaches the pulley
@@ -85,12 +88,14 @@ function updatePhysics() {
 }
 
 function updatePhysicsInfo() {
-    const tension = (2 * mass1 * mass2 * gravity) / (mass1 + mass2);
+    
+    const tension = (2 * mass1 * mass2 * speedFactor) / (mass1 + mass2);
     const infoElement = document.getElementById('physicsInfo');
     infoElement.innerHTML = `
         <h4>Physics Information:</h4>
-        <p>Acceleration: ${acceleration.toFixed(2)} m/s²</p>
-        <p>Velocity: ${velocity.toFixed(2)} m/s</p>
+        <p>Gravity: ${speedFactor.toFixed(2)} m/s²</p>
+        <p>|Acceleration|: ${Math.abs(acceleration.toFixed(2))} m/s²</p>
+        <p>|Velocity|: ${Math.abs(velocity.toFixed(2))} m/s</p>
         <p>Tension: ${tension.toFixed(2)} N</p>
     `;
 }
