@@ -80,8 +80,6 @@ function updatePhysics() {
     position1 -= displacement;
     position2 += displacement;
     angle -= displacement / pulleyRadius;
-
-    // Stop if either mass reaches the pulley
     if (position1 <= pulleyY + massSize / 2 || position2 <= pulleyY + massSize / 2) {
         isPlaying = false;
     }
