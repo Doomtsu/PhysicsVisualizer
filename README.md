@@ -14,19 +14,19 @@ Features
 ```
 ### 2. Install Visual Studio Code if you haven't already:
 
-Download VS Code from https://code.visualstudio.com/
+- Download VS Code from https://code.visualstudio.com/
 
-Install it on your system
+- Install it on your system
 
 ### 3. Install the Live Server extension in VS Code:
 
-Open VS Code
+- Open VS Code
 
-Click on the Extensions icon in the sidebar (or press Ctrl+Shift+X)
+- Click on the Extensions icon in the sidebar (or press Ctrl+Shift+X)
 
-Search for "Live Server"
+- Search for "Live Server"
 
-Install the Live Server extension by Ritwick Dey
+- Install the Live Server extension by Ritwick Dey
 
 ### 4. Running the application:
 
