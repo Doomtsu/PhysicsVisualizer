@@ -10,7 +10,7 @@ Features
 # Setup
 ### 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/Doomtsu/PhysicsVisualizer
+   git clone https://github.com/Doomtsu/PhysicsVisualizer.git
 ```
 ### 2. Install Visual Studio Code if you haven't already:
 
