@@ -8,20 +8,23 @@ Features
 
 
 ## Setup
-Clone this repository to your local machine:
+### 1. Clone this repository to your local machine:
    ```bash
    git clone [repository-url]
-Install Visual Studio Code if you haven't already:
+```
+### 2. Install Visual Studio Code if you haven't already:
 
 Download VS Code from https://code.visualstudio.com/
 Install it on your system
-Install the Live Server extension in VS Code:
+
+### 3. Install the Live Server extension in VS Code:
 
 Open VS Code
 Click on the Extensions icon in the sidebar (or press Ctrl+Shift+X)
 Search for "Live Server"
 Install the Live Server extension by Ritwick Dey
-Running the application:
+
+### 4. Running the application:
 
 Open the project folder in VS Code
 Right-click on the index.html file
