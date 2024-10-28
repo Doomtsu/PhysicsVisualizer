@@ -30,11 +30,11 @@ Features
 
 ### 4. Running the application:
 
-Open the project folder in VS Code
+- Open the project folder in VS Code
 
-Right-click on the index.html file
+- Right-click on the index.html file
 
-Select "Open with Live Server" from the context menu
+- Select "Open with Live Server" from the context menu
 
-The application should automatically open in your default web browser
+- The application should automatically open in your default web browser
 
