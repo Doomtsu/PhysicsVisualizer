@@ -18,7 +18,7 @@
         .control-panel {
             background-color: #e6eeff;
             border-radius: 10px;
-            padding: 20px;
+            padding: 20px; 
         }
         :root {
         --bg-color: #f0f5ff;
@@ -26,6 +26,7 @@
         --canvas-bg: #ffffff;
         --control-panel-bg: #e6eeff;
     }
+
     </style>
 </head>
 <body>
@@ -70,9 +71,8 @@
         const gravitySlider = document.getElementById('gravitySlider');
         const gravityValue = document.getElementById('gravityValue');
 
-        // Update the displayed value when the slider is moved
         gravitySlider.addEventListener('input', function() {
-            gravityValue.textContent = this.value; // Update the displayed value
+            gravityValue.textContent = this.value; 
         });
     </script>
     
