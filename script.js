@@ -141,5 +141,4 @@ document.getElementById('speedControl').addEventListener('input', (e) => {
 document.getElementById('mass1').addEventListener('input', resetSimulation);
 document.getElementById('mass2').addEventListener('input', resetSimulation);
 
-// Initial setup
 resetSimulation();
