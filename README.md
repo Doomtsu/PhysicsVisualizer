@@ -29,5 +29,6 @@ Install the Live Server extension by Ritwick Dey
 Open the project folder in VS Code
 Right-click on the index.html file
 Select "Open with Live Server" from the context menu
+
 The application should automatically open in your default web browser
 
