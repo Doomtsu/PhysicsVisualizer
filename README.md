@@ -7,7 +7,7 @@ Features
 -  Expandable Framework: Designed to easily incorporate additional visualizations and physics concepts in the future.
 
 
-## Setup
+# Setup
 ### 1. Clone this repository to your local machine:
    ```bash
    git clone [repository-url]
