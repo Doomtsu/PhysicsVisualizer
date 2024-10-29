@@ -8,42 +8,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.linear-gradient {
-    width: 300px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    margin: 20px;
-}
-
-.radial-gradient {
-    width: 300px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    background: radial-gradient(circle at center, #ff7e5f, #feb47b);
-    margin: 20px;
-}
-
-.conic-gradient {
-    width: 300px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    background: conic-gradient(#ff7e5f, #feb47b, #ff7e5f);
-    margin: 20px;
-}
-
 .canvas-container {
     background-color: white;
     border-radius: 10px;
