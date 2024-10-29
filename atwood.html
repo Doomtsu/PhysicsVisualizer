@@ -50,16 +50,79 @@
             border-color: #ecf0f1;
             color: #ecf0f1;
         }
+        .nav-buttons {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .back-button, #themeToggle {
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover, #themeToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button i, #themeToggle i {
+            font-size: 1.1em;
+        }
+        .dark-mode .back-button,
+        .dark-mode #themeToggle {
+            background-color: #34495e;
+            border-color: #ecf0f1;
+            color: #ecf0f1;
+        }
+
+        .dark-mode .back-button:hover,
+        .dark-mode #themeToggle:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Theme switch specific styles */
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-buttons, .theme-switch {
+                position: relative;
+                top: 0;
+                left: 0;
+                right: 0;
+                margin: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="nav-buttons">
+        <a href="main.html" class="btn btn-outline-primary back-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
     <div class="theme-switch">
         <button class="btn btn-outline-primary" id="themeToggle">
             <i class="fas fa-moon"></i> Toggle Theme
         </button>
     </div>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Advanced Atwood's Machine Simulator</h1>
+        <h1 class="text-center mb-4">Atwood's Machine Simulator</h1>
         <div class="row">
             <div class="col-md-8">
                 <div class="canvas-container p-3">
