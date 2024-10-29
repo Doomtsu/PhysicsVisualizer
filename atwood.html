@@ -6,30 +6,58 @@
     <title>Advanced Atwood's Machine Simulator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #f0f5ff;
+            --text-color: #333;
+            --canvas-bg: #ffffff;
+            --control-panel-bg: #e6eeff;
+        }
         body {
-            background-color: #f0f5ff;
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
         .canvas-container {
-            background-color: white;
+            background-color: var(--canvas-bg);
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .control-panel {
-            background-color: #e6eeff;
+            background-color: var(--control-panel-bg);
             border-radius: 10px;
-            padding: 20px; 
+            padding: 20px;
         }
-        :root {
-        --bg-color: #f0f5ff;
-        --text-color: #000000;
-        --canvas-bg: #ffffff;
-        --control-panel-bg: #e6eeff;
-    }
-
+        .dark-mode {
+            --bg-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --canvas-bg: #34495e;
+            --control-panel-bg: #2c3e50;
+        }
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        #themeToggle {
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .dark-mode #themeToggle {
+            background-color: #34495e;
+            border-color: #ecf0f1;
+            color: #ecf0f1;
+        }
     </style>
 </head>
 <body>
+    <div class="theme-switch">
+        <button class="btn btn-outline-primary" id="themeToggle">
+            <i class="fas fa-moon"></i> Toggle Theme
+        </button>
+    </div>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Advanced Atwood's Machine Simulator</h1>
         <div class="row">
@@ -68,6 +96,29 @@
         
     </script>
     <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+                themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+            }
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        const savedTheme = localStorage.getItem('darkMode');
+        if (savedTheme !== null) {
+            setTheme(savedTheme === 'true');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = !body.classList.contains('dark-mode');
+            setTheme(isDark);
+        });
         const gravitySlider = document.getElementById('gravitySlider');
         const gravityValue = document.getElementById('gravityValue');
 
