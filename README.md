@@ -32,7 +32,7 @@ Features
 
 - Open the project folder in VS Code
 
-- Right-click on the index.html file
+- Right-click on the main.html file
 
 - Select "Open with Live Server" from the context menu
 
