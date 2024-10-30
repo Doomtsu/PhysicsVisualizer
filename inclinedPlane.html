@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block on Inclined Plane Simulator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #f0f5ff;
+        --text-color: #333;
+        --canvas-bg: #ffffff;
+        --control-panel-bg: #e6eeff;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Roboto", Arial, sans-serif;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .canvas-container {
+        background-color: var(--canvas-bg);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .control-panel {
+        background-color: var(--control-panel-bg);
+        border-radius: 10px;
+        padding: 20px;
+      }
+      .dark-mode {
+        --bg-color: #2c3e50;
+        --text-color: #ecf0f1;
+        --canvas-bg: #34495e;
+        --control-panel-bg: #2c3e50;
+      }
+      .theme-switch {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+      #themeToggle {
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+      .dark-mode #themeToggle {
+        background-color: #34495e;
+        border-color: #ecf0f1;
+        color: #ecf0f1;
+      }
+      .nav-buttons {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 10px;
+      }
+
+      .back-button,
+      #themeToggle {
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-button:hover,
+      #themeToggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-button i,
+      #themeToggle i {
+        font-size: 1.1em;
+      }
+      .dark-mode .back-button,
+      .dark-mode #themeToggle {
+        background-color: #34495e;
+        border-color: #ecf0f1;
+        color: #ecf0f1;
+      }
+
+      .dark-mode .back-button:hover,
+      .dark-mode #themeToggle:hover {
+        background-color: #2c3e50;
+      }
+
+      @media (max-width: 768px) {
+        .nav-buttons,
+        .theme-switch {
+          position: relative;
+          top: 0;
+          left: 0;
+          right: 0;
+          margin: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-buttons">
+      <a href="main.html" class="btn btn-outline-primary back-button">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+    <div class="theme-switch">
+      <button class="btn btn-outline-primary" id="themeToggle">
+        <i class="fas fa-moon"></i> Toggle Theme
+      </button>
+    </div>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Block on Inclined Plane Simulator</h1>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="canvas-container">
+            <canvas id="canvas" width="600" height="400"></canvas>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="control-panel">
+            <h4>Controls</h4>
+            <div class="mb-3">
+              <label for="angleSlider" class="form-label"
+                >Angle (degrees): <span id="angleValue">30</span></label
+              >
+              <input
+                type="range"
+                class="form-range"
+                id="angleSlider"
+                min="0"
+                max="90"
+                value="30"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="massInput" class="form-label">Mass (kg):</label>
+              <input
+                type="number"
+                class="form-control"
+                id="massInput"
+                value="1"
+                min="0.1"
+                step="0.1"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="frictionInput" class="form-label"
+                >Coefficient of Friction:</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="frictionInput"
+                value="0.3"
+                min="0"
+                max="1"
+                step="0.01"
+              />
+            </div>
+            <button id="simulateBtn" class="btn btn-primary">Simulate</button>
+          </div>
+          <div id="forceInfo" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
+      const body = document.body;
+
+      function setTheme(isDark) {
+        if (isDark) {
+          body.classList.add("dark-mode");
+          themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+        } else {
+          body.classList.remove("dark-mode");
+          themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
+        }
+        localStorage.setItem("darkMode", isDark);
+      }
+
+      const savedTheme = localStorage.getItem("darkMode");
+      if (savedTheme !== null) {
+        setTheme(savedTheme === "true");
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const isDark = !body.classList.contains("dark-mode");
+        setTheme(isDark);
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const angleSlider = document.getElementById("angleSlider");
+      const angleValue = document.getElementById("angleValue");
+      const massInput = document.getElementById("massInput");
+      const frictionInput = document.getElementById("frictionInput");
+      const simulateBtn = document.getElementById("simulateBtn");
+      const forceInfo = document.getElementById("forceInfo");
+
+      let angle = 30;
+      let mass = 1;
+      let friction = 0.3;
+      const FIXED_DISTANCE_FROM_TOP = 100;
+
+      function init() {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+
+        const angleSlider = document.getElementById("angleSlider");
+        angleSlider.addEventListener("input", function () {
+          angle = parseInt(this.value);
+          drawScene();
+        });
+
+        drawScene();
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const angleRad = (angle * Math.PI) / 180;
+        const padding = 50;
+        const maxHeight = canvas.height - 2 * padding;
+        const maxWidth = canvas.width - 2 * padding;
+
+        let rampHeight = maxWidth * Math.tan(angleRad);
+        let rampWidth = maxWidth;
+
+        if (rampHeight > maxHeight) {
+          rampHeight = maxHeight;
+          rampWidth = maxHeight / Math.tan(angleRad);
+        }
+
+        const startX = padding;
+        const startY = canvas.height - padding;
+        const endX = startX + rampWidth;
+        const endY = startY - rampHeight;
+
+        ctx.beginPath();
+        ctx.fillStyle = "#6e2e4a";
+        ctx.strokeStyle = "#6e2e4a";
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.lineTo(endX, startY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.save();
+
+        const rampLength = Math.sqrt(
+          rampWidth * rampWidth + rampHeight * rampHeight
+        );
+
+        const scaledDistance = (FIXED_DISTANCE_FROM_TOP / 800) * rampLength;
+        const topX = endX;
+        const topY = endY;
+        const blockX = topX - scaledDistance * Math.cos(angleRad);
+        const blockY = topY + scaledDistance * Math.sin(angleRad);
+
+        ctx.translate(blockX, blockY);
+        ctx.rotate(-angleRad);
+        ctx.beginPath();
+        ctx.fillStyle = "#61b4c7";
+        ctx.strokeStyle = "#61b4c7";
+
+        const blockWidth = 40;
+        const blockHeight = 30;
+        ctx.rect(-blockWidth / 2, -blockHeight / 2, blockWidth, blockHeight);
+
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(`Angle: ${angle}°`, 10, 30);
+      }
+      window.onload = init;
+
+      function calculateForces() {
+        const g = 9.81;
+        const weightForce = mass * g;
+        const normalForce = weightForce * Math.cos((angle * Math.PI) / 180);
+        const parallelForce = weightForce * Math.sin((angle * Math.PI) / 180);
+        const frictionForce = friction * normalForce;
+        const netForce = parallelForce - frictionForce;
+
+        forceInfo.innerHTML = `
+                    <h4>Forces:</h4>
+                    <p>Weight: ${weightForce.toFixed(2)} N</p>
+                    <p>Normal Force: ${normalForce.toFixed(2)} N</p>
+                    <p>Parallel Force: ${parallelForce.toFixed(2)} N</p>
+                    <p>Friction Force: ${frictionForce.toFixed(2)} N</p>
+                    <p>Net Force: ${netForce.toFixed(2)} N</p>
+                `;
+      }
+
+      angleSlider.addEventListener("input", (e) => {
+        angle = parseInt(e.target.value);
+        angleValue.textContent = angle;
+        drawScene();
+      });
+
+      simulateBtn.addEventListener("click", () => {
+        mass = parseFloat(massInput.value);
+        friction = parseFloat(frictionInput.value);
+        drawScene();
+        calculateForces();
+      });
+
+      drawScene();
+    </script>
+  </body>
+</html>
