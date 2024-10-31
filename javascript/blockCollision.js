@@ -17,8 +17,6 @@ class Block {
     draw() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        
-        // Add mass text to blocks
         ctx.fillStyle = "white";
         ctx.font = "14px Arial";
         ctx.textAlign = "center";
@@ -27,15 +25,13 @@ class Block {
 
     update() {
         this.x += this.velocity;
-        
-        // Add boundary checking
         if (this.x <= 0) {
             this.x = 0;
-            this.velocity = -this.velocity; // Bounce off left wall
+            this.velocity = -this.velocity; 
         }
         if (this.x + this.width >= canvas.width) {
             this.x = canvas.width - this.width;
-            this.velocity = -this.velocity; // Bounce off right wall
+            this.velocity = -this.velocity; 
         }
     }
 }
@@ -47,13 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const simulateBtn = document.getElementById("simulateBtn");
     simulateBtn.addEventListener("click", startSimulation);
 
-    // Initialize blocks with default values
     initializeBlocks();
 
-    // Draw initial state
     drawBlocks();
 
-    // Add event listeners to update block properties when inputs change
+ 
     document.getElementById("mass1").addEventListener("input", updateBlockProperties);
     document.getElementById("velocity1").addEventListener("input", updateBlockProperties);
     document.getElementById("mass2").addEventListener("input", updateBlockProperties);
@@ -66,9 +60,9 @@ function initializeBlocks() {
     const mass2 = parseFloat(document.getElementById("mass2").value);
     const velocity2 = parseFloat(document.getElementById("velocity2").value);
 
-    // Calculate positions to ensure blocks are fully visible
-    const leftPosition = canvas.width * 0.2; // 20% from left
-    const rightPosition = canvas.width * 0.6; // 60% from left
+   
+    const leftPosition = canvas.width * 0.2; 
+    const rightPosition = canvas.width * 0.6; 
 
     block1 = new Block(mass1, 0, leftPosition, "red");
     block2 = new Block(mass2, 0, rightPosition, "blue");
@@ -78,8 +72,6 @@ function initializeBlocks() {
 
 function drawBlocks() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw a ground line
     ctx.beginPath();
     ctx.strokeStyle = '#666';
     ctx.lineWidth = 2;
@@ -97,7 +89,7 @@ function updateBlockProperties() {
     block2.mass = parseFloat(document.getElementById("mass2").value);
     block2.velocity = 0;
 
-    // Adjust block sizes based on mass
+
     const baseSize = 50;
     const maxSize = 80;
     const minSize = 30;
@@ -114,7 +106,7 @@ function startSimulation() {
         cancelAnimationFrame(animationId);
     }
 
-    // Reset positions with proper spacing
+
     block1.x = canvas.width * 0.2;
     block2.x = canvas.width * 0.6;
 
@@ -126,8 +118,6 @@ function startSimulation() {
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw ground line
     ctx.beginPath();
     ctx.strokeStyle = '#666';
     ctx.lineWidth = 2;
@@ -165,8 +155,6 @@ function handleCollision() {
 
     block1.velocity = ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2);
     block2.velocity = ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2);
-
-    // Separate the blocks to prevent sticking
     const overlap = (block1.x + block1.width) - block2.x;
     block1.x -= overlap / 2;
     block2.x += overlap / 2;
