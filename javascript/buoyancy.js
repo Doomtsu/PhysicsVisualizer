@@ -2,23 +2,23 @@ class BuoyancySimulator {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.blockMass = 1; // Default mass in kg
-        this.blockDensity = 500; // Default density in kg/m^3
-        this.fluidDensity = 1000; // Default fluid density in kg/m^3
-        this.g = 9.81; // Acceleration due to gravity in m/s^2
-        this.waterLevel = canvas.height * 0.7; // Water level (y-coordinate)
+        this.blockMass = 1;
+        this.blockDensity = 500;
+        this.fluidDensity = 1000; 
+        this.g = 9.81; 
+        this.waterLevel = canvas.height * 0.7; 
         this.blockWidth = 50;
         this.blockHeight = 50;
         this.blockX = (this.canvas.width - this.blockWidth) / 2;
-        this.initialBlockY = 150; // Initial Y position
-        this.blockY = this.initialBlockY; // Current Y position
-        this.velocity = 0; // Initial velocity in m/s
-        this.isSimulating = false; // Simulation state
-        this.timeStep = 1 / 60; // 60 FPS
-        this.pixelsPerMeter = 100; // Scale factor
+        this.initialBlockY = 150; 
+        this.blockY = this.initialBlockY; 
+        this.velocity = 0;
+        this.isSimulating = false; 
+        this.timeStep = 1 / 60; 
+        this.pixelsPerMeter = 100; 
 
         this.initializeControls();
-        this.draw(); // Initial drawing
+        this.draw(); 
     }
 
     initializeControls() {
@@ -80,29 +80,26 @@ class BuoyancySimulator {
     animate() {
         if (!this.isSimulating) return;
 
-        const volume = this.blockMass / this.blockDensity; // Volume of the block
-        const submergedDepth = Math.max(0, this.waterLevel - (this.blockY + this.blockHeight)); // How deep the block is submerged
-        const submergedVolume = Math.min(volume, submergedDepth); // Effective volume submerged
+        const volume = this.blockMass / this.blockDensity; 
+        const submergedDepth = Math.max(0, this.waterLevel - (this.blockY + this.blockHeight)); 
+        const submergedVolume = Math.min(volume, submergedDepth); 
         
-        const buoyantForce = this.fluidDensity * this.g * submergedVolume; // Buoyant force
-        const weight = this.blockMass * this.g; // Weight of the block
-        const netForce = buoyantForce - weight; // Net force acting on the block
+        const buoyantForce = this.fluidDensity * this.g * submergedVolume; 
+        const weight = this.blockMass * this.g; 
+        const netForce = buoyantForce - weight;
 
-        // Update velocity and position
-        const acceleration = netForce / this.blockMass; // Calculate acceleration
-        this.velocity += acceleration * this.timeStep; // Update velocity with acceleration
-        this.blockY += this.velocity * this.timeStep * this.pixelsPerMeter; // Update position
 
-        // Damping to simulate water resistance
+        const acceleration = netForce / this.blockMass; 
+        this.velocity += acceleration * this.timeStep; 
+        this.blockY += this.velocity * this.timeStep * this.pixelsPerMeter; 
         this.velocity *= 0.99;
 
-        // Prevent the block from going off-screen
         if (this.blockY < 0) {
-            this.blockY = 0; // Keep the block above the canvas
-            this.velocity *= -0.5; // Bounce off the top with damping
+            this.blockY = 0; 
+            this.velocity *= -0.5; 
         } else if (this.blockY + this.blockHeight > this.canvas.height) {
-            this.blockY = this.canvas.height - this.blockHeight; // Keep the block within bounds
-            this.velocity *= -0.5 ; // Bounce off the bottom with damping
+            this.blockY = this.canvas.height - this.blockHeight; 
+            this.velocity *= -0.5 ; 
         }
 
         this.draw();
@@ -113,12 +110,8 @@ class BuoyancySimulator {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw water
         this.ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
         this.ctx.fillRect(0, this.waterLevel, this.canvas.width, this.canvas.height - this.waterLevel);
-
-        // Draw block
         this.ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
         this.ctx.fillRect(this.blockX, this.blockY, this.blockWidth, this.blockHeight);
     }
