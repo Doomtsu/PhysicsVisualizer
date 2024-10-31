@@ -5,7 +5,7 @@ class ProjectileLauncher {
         this.isLaunched = false;
         this.projectile = { x: 0, y: 0 };
         this.time = 0;
-        this.g = 9.81; // Acceleration due to gravity (m/s^2)
+        this.g = 9.81; 
         this.pixelsPerMeter = 4;
         this.launchHeight = 10;
         this.initializeControls();
@@ -28,17 +28,11 @@ class ProjectileLauncher {
         this.launchHeight = parseFloat(this.launchHeightInput.value);
         this.launchAngle = parseFloat(this.launchAngleInput.value) * Math.PI / 180;
         this.launchVelocity = parseFloat(this.launchVelocityInput.value);
-    
-        // Set initial x position
         this.projectile.x = 0;
-        
-        // Set initial y position (from the bottom of the canvas)
         this.initialY = this.canvas.height - (this.launchHeight * this.pixelsPerMeter);
         this.projectile.y = this.initialY;
-    
-        // Calculate initial velocity components
         this.vx = this.launchVelocity * Math.cos(this.launchAngle);
-        this.vy = -this.launchVelocity * Math.sin(this.launchAngle); // Negative because y increases downwards
+        this.vy = -this.launchVelocity * Math.sin(this.launchAngle);
     
         this.animate();
     }
@@ -48,8 +42,6 @@ class ProjectileLauncher {
     animate() {
         this.time += 0.02;
         this.projectile.x = this.vx * this.time * this.pixelsPerMeter;
-        
-        // Calculate the new y position
         const displacement = this.vy * this.time + 0.5 * this.g * this.time * this.time;
         this.projectile.y = this.initialY + displacement * this.pixelsPerMeter;
     
@@ -65,16 +57,10 @@ class ProjectileLauncher {
     
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw ground
         this.ctx.fillStyle = '#8B4513';
         this.ctx.fillRect(0, this.canvas.height - 10, this.canvas.width, 10);
-
-        // Draw launcher
         this.ctx.fillStyle = '#333';
         this.ctx.fillRect(0, this.canvas.height - this.launchHeight * this.pixelsPerMeter, 20, this.launchHeight * this.pixelsPerMeter);
-
-        // Draw projectile
         if (this.isLaunched) {
             this.ctx.fillStyle = '#FF0000';
             this.ctx.beginPath();
