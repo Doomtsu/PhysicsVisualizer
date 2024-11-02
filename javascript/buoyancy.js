@@ -19,6 +19,10 @@ class BuoyancySimulator {
 
         this.initializeControls();
         this.draw(); 
+        this.dampingCoefficient = 0.5; 
+        this.velocity = 0;
+        this.acceleration = 0;
+        this.dt = 0.016; 
     }
 
     initializeControls() {
