@@ -79,7 +79,7 @@ class ModifiedAtwoodMachine {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
         const originX = 50;
-        const originY = this.canvas.height - 50;
+        const originY = this.canvas.height - 100; // Raise the system higher
         const pulleyX = originX + 300;
         const pulleyY = originY - 300 * Math.tan(this.angle * Math.PI / 180);
 
@@ -90,6 +90,14 @@ class ModifiedAtwoodMachine {
         this.ctx.lineTo(pulleyX, originY);
         this.ctx.strokeStyle = '#000';
         this.ctx.stroke();
+
+        // Draw ramp fill (optional)
+        this.ctx.fillStyle = '#0047ab';
+        this.ctx.beginPath();
+        this.ctx.moveTo(originX, originY);
+        this.ctx.lineTo(pulleyX, pulleyY);
+        this.ctx.lineTo(pulleyX, originY);
+        this.ctx.fill();
 
         // Draw pulley
         this.ctx.beginPath();
@@ -118,8 +126,7 @@ class ModifiedAtwoodMachine {
         this.ctx.moveTo(mass1X, mass1Y);
         this.ctx.lineTo(pulleyX, pulleyY);
         this.ctx.lineTo(mass2X, mass2Y);
-        this.ctx.strokeStyle = '#000';
-        this.ctx.stroke();
+        this.ctx.stroke ();
     }
 
     drawMass(x, y, label) {
