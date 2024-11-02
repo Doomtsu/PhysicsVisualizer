@@ -5,9 +5,8 @@ class ModifiedAtwoodMachine {
         this.scale = 100; // pixels per meter
 
         // Initialize parameters
-        this.m1 = 1; // kg
-        this.m2 = 1; // kg
-        this.m3 = 2; // kg
+        this.m1 = 1; // kg (mass on incline)
+        this.m2 = 2; // kg (hanging mass)
         this.angle = 30; // degrees
         this.mu = 0.1; // coefficient of friction
         this.g = 9.81; // m/s^2
@@ -29,12 +28,9 @@ class ModifiedAtwoodMachine {
         const sinTheta = Math.sin(this.angle * Math.PI / 180);
         const cosTheta = Math.cos(this.angle * Math.PI / 180);
         
-        // Calculate effective mass on the incline
-        const m_effective = this.m1 + this.m2;
-        
         // Calculate acceleration
-        const numerator = this.m3 * this.g - m_effective * this.g * (sinTheta - this.mu * cosTheta);
-        const denominator = this.m3 + m_effective;
+        const numerator = this.m2 * this.g - this.m1 * this.g * (sinTheta - this.mu * cosTheta);
+        const denominator = this.m1 + this.m2;
         
         this.acceleration = numerator / denominator;
     }
@@ -105,27 +101,23 @@ class ModifiedAtwoodMachine {
         const pos = this.position * this.scale;
         const angleRad = this.angle * Math.PI / 180;
         
-        // Draw masses on incline
+        // Draw mass on incline
         const mass1X = originX + pos * Math.cos(angleRad);
         const mass1Y = originY - pos * Math.sin(angleRad);
         
-        const mass2X = mass1X + 30;
-        const mass2Y = mass1Y;
-        
         // Draw hanging mass (moves in opposite direction)
-        const mass3X = pulleyX;
-        const mass3Y = pulleyY + pos;
+        const mass2X = pulleyX;
+        const mass2Y = pulleyY + pos;
 
         // Draw masses
         this.drawMass(mass1X, mass1Y, 'M1');
         this.drawMass(mass2X, mass2Y, 'M2');
-        this.drawMass(mass3X, mass3Y, 'M3');
 
         // Draw rope
         this.ctx.beginPath();
         this.ctx.moveTo(mass1X, mass1Y);
         this.ctx.lineTo(pulleyX, pulleyY);
-        this.ctx.lineTo(mass3X, mass3Y);
+        this.ctx.lineTo(mass2X, mass2Y);
         this.ctx.strokeStyle = '#000';
         this.ctx.stroke();
     }
@@ -158,7 +150,6 @@ class ModifiedAtwoodMachine {
         const resetBtn = document.getElementById('resetBtn');
         const mass1Input = document.getElementById('mass1');
         const mass2Input = document.getElementById('mass2');
-        const mass3Input = document.getElementById('mass3');
         const angleInput = document.getElementById('angle');
         const frictionInput = document.getElementById('friction');
 
@@ -190,11 +181,6 @@ class ModifiedAtwoodMachine {
             recalculateAcceleration();
         });
 
-        mass3Input.addEventListener('change', (e) => {
-            this.m3 = parseFloat(e.target.value);
-            recalculateAcceleration();
-        });
-
         angleInput.addEventListener('change', (e) => {
             this.angle = parseFloat(e.target.value);
             recalculateAcceleration();
@@ -209,5 +195,5 @@ class ModifiedAtwoodMachine {
 
 // Initialize the simulator when the window loads
 window.addEventListener('load', () => {
-    new ModifiedAtwoodMachine ();
+    new ModifiedAtwoodMachine();
 });
