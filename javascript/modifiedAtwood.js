@@ -27,7 +27,7 @@ class ModifiedAtwoodMachine {
     const cosTheta = Math.cos((this.angle * Math.PI) / 180);
 
     const numerator =
-      this.m2 * this.g - this.m1 * this.g * (sinTheta - this.mu * cosTheta);
+      this.m2 * this.g - this.m1 * this.g * (sinTheta + this.mu * cosTheta);
     const denominator = this.m1 + this.m2;
 
     this.acceleration = numerator / denominator;
@@ -180,6 +180,7 @@ class ModifiedAtwoodMachine {
       this.angle = parseFloat(e.target.value);
       recalculateAcceleration();
     });
+    
 
     frictionInput.addEventListener("change", (e) => {
       this.mu = parseFloat(e.target.value);
