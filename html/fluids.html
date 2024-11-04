@@ -169,17 +169,108 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="bernoulli" role="tabpanel" aria-labelledby="bernoulli-tab">
-                <!-- Bernoulli's Principle content -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="canvas-container">
+                            <canvas id="bernoulliCanvas" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel">
+                            <h3>Bernoulli's Principle Controls</h3>
+                            <div class="mb-3">
+                                <label for="fluidVelocity" class="form-label">Initial Fluid Velocity (m/s)</label>
+                                <input type="range" class="form-range" id="fluidVelocity" min="1" max="10" step="0.5" value="5">
+                                <span id="fluidVelocityValue">5</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tubeDiameter" class="form-label">Constriction Diameter Ratio</label>
+                                <input type="range" class="form-range" id="tubeDiameter" min="0.2" max="1" step="0.1" value="0.5">
+                                <span id="tubeDiameterValue">0.5</span>
+                            </div>
+                            <button class="btn btn-primary" id="simulateBernoulli">Simulate Bernoulli</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Viscosity Tab -->
             <div class="tab-pane fade" id="viscosity" role="tabpanel" aria-labelledby="viscosity-tab">
-                <!-- Viscosity content -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="canvas-container">
+                            <canvas id="viscosityCanvas" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel">
+                            <h3>Viscosity Controls</h3>
+                            <div class="mb-3">
+                                <label for="fluidViscosity" class="form-label">Fluid Viscosity (Pa·s)</label>
+                                <input type="range" class="form-range" id="fluidViscosity" min="0.1" max="10" step="0.1" value="1">
+                                <span id="fluidViscosityValue">1</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="particleSize" class="form-label">Particle Size (mm)</label>
+                                <input type="range" class="form-range" id="particleSize" min="1" max="10" step="0.5" value="3">
+                                <span id="particleSizeValue">3</span>
+                            </div>
+                            <button class="btn btn-primary" id="simulateViscosity">Simulate Viscosity</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Pascal's Principle Tab -->
             <div class="tab-pane fade" id="pascal" role="tabpanel" aria-labelledby="pascal-tab">
-                <!-- Pascal's Principle content -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="canvas-container">
+                            <canvas id="pascalCanvas" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel">
+                            <h3>Pascal's Principle Controls</h3>
+                            <div class="mb-3">
+                                <label for="pressure" class="form-label">Pressure (Pa)</label>
+                                <input type="range" class="form-range" id="pressure" min="100" max="1000" step="50" value="500">
+                                <span id="pressureValue">500</span>
+                            </div>
+                            <button class="btn btn-primary" id="simulatePascal">Simulate Pascal</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Archimedes' Principle Tab -->
             <div class="tab-pane fade" id="archimedes" role="tabpanel" aria-labelledby="archimedes-tab">
-                <!-- Archimedes' Principle content -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="canvas-container">
+                            <canvas id="archimedesCanvas" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel">
+                            <h3>Archimedes' Principle Controls</h3>
+                            <div class="mb-3">
+                                <label for="objectDensity" class="form-label">Object Density (kg/m³)</label>
+                                <input type="range" class="form-range" id="objectDensity" min="500" max="2000" step="100" value="1000">
+                                <span id="objectDensityValue">1000</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fluidDensity" class="form-label">Fluid Density (kg/m³)</label>
+                                <input type="range" class="form-range" id="fluidDensity" min="500" max="2000" step="100" value="1000">
+                                <span id="fluidDensityValue">1000</span>
+                            </div>
+                            <button class="btn btn-primary" id="simulateArchimedes">Simulate Archimedes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 
