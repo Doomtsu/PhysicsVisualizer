@@ -96,7 +96,6 @@ class RotationalMotionSimulator {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Draw the rotating object
         this.ctx.save();
         this.ctx.translate(this.centerX, this.centerY);
         this.ctx.rotate(this.angle);
@@ -123,7 +122,6 @@ class RotationalMotionSimulator {
         this.ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.fill();
 
-        // Add a line to show rotation
         this.ctx.beginPath();
         this.ctx.moveTo(0, 0);
         this.ctx.lineTo(0, -scaledRadius);
@@ -140,7 +138,7 @@ class RotationalMotionSimulator {
         this.ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.stroke();
 
-        // Add a marker to show rotation
+      
         this.ctx.beginPath();
         this.ctx.arc(0, -scaledRadius, 5, 0, 2 * Math.PI);
         this.ctx.fillStyle = 'red';
@@ -156,7 +154,6 @@ class RotationalMotionSimulator {
         this.ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.stroke();
 
-        // Add markers at the ends of the rod
         this.ctx.beginPath();
         this.ctx.arc(-scaledLength, 0, 5, 0, 2 * Math.PI);
         this.ctx.arc(scaledLength, 0, 5, 0, 2 * Math.PI);
