@@ -122,6 +122,14 @@ class RotationalMotionSimulator {
         this.ctx.arc(0, 0, scaledRadius, 0, 2 * Math.PI);
         this.ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.fill();
+
+        // Add a line to show rotation
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0);
+        this.ctx.lineTo(0, -scaledRadius);
+        this.ctx.strokeStyle = 'red';
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
     }
 
     drawRing() {
@@ -131,6 +139,12 @@ class RotationalMotionSimulator {
         this.ctx.lineWidth = 5;
         this.ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.stroke();
+
+        // Add a marker to show rotation
+        this.ctx.beginPath();
+        this.ctx.arc(0, -scaledRadius, 5, 0, 2 * Math.PI);
+        this.ctx.fillStyle = 'red';
+        this.ctx.fill();
     }
 
     drawRod() {
@@ -141,6 +155,13 @@ class RotationalMotionSimulator {
         this.ctx.lineWidth = 5;
         this.ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)';
         this.ctx.stroke();
+
+        // Add markers at the ends of the rod
+        this.ctx.beginPath();
+        this.ctx.arc(-scaledLength, 0, 5, 0, 2 * Math.PI);
+        this.ctx.arc(scaledLength, 0, 5, 0, 2 * Math.PI);
+        this.ctx.fillStyle = 'red';
+        this.ctx.fill();
     }
 
     updateInfo() {
