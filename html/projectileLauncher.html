@@ -113,16 +113,25 @@
             <div class="col-md-4">
                 <div class="control-panel">
                     <div class="mb-3">
-                        <label for="launchHeight" class="form-label">Launch Height (m):</label>
-                        <input type="number" class="form-control" id="launchHeight" value="10" min="0" max="100" step="1">
+                        <label for="launchHeight" class="form-label">Launch Height (0-50 m):</label>
+                        <input type="number" class="form-control" id="launchHeight" 
+                               value="10" min="0" max="50" step="1"
+                               oninput="validateInput(this, 0, 50)">
+                        <div class="invalid-feedback">Please enter a value between 0 and 50 meters</div>
                     </div>
                     <div class="mb-3">
-                        <label for="launchAngle" class="form-label">Launch Angle (degrees):</label>
-                        <input type="number" class="form-control" id="launchAngle" value="45" min="0" max="90" step="1">
+                        <label for="launchAngle" class="form-label">Launch Angle (0-90 degrees):</label>
+                        <input type="number" class="form-control" id="launchAngle" 
+                               value="45" min="0" max="90" step="1"
+                               oninput="validateInput(this, 0, 90)">
+                        <div class="invalid-feedback">Please enter a value between 0 and 90 degrees</div>
                     </div>
                     <div class="mb-3">
-                        <label for="launchVelocity" class="form-label">Initial Velocity (m/s):</label>
-                        <input type="number" class="form-control" id="launchVelocity" value="20" min="1" max="100" step="1">
+                        <label for="launchVelocity" class="form-label">Initial Velocity (0-50 m/s):</label>
+                        <input type="number" class="form-control" id="launchVelocity" 
+                               value="20" min="0" max="50" step="1"
+                               oninput="validateInput(this, 0, 50)">
+                        <div class="invalid-feedback">Please enter a value between 0 and 50 m/s</div>
                     </div>
                     <button id="launchBtn" class="btn btn-primary">Launch</button>
                 </div>
