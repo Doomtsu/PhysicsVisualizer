@@ -66,3 +66,40 @@ body {
 .form-range::-ms-thumb {
   background: #4a90e2;
 }
+input[type="number"],
+input[type="range"],
+select,
+.form-control {
+    background-color: #ffffff !important;
+    color: #333 !important;
+    border: 1px solid #ced4da;
+}
+
+.dark-mode input[type="number"],
+.dark-mode input[type="range"],
+.dark-mode select,
+.dark-mode .form-control {
+    background-color: #ffffff !important;
+    color: #333 !important;
+    border: 1px solid #4a5568;
+}
+
+input[type="number"]:focus,
+input[type="range"]:focus,
+select:focus,
+.form-control:focus {
+    background-color: #ffffff !important;
+    color: #333 !important;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.dark-mode label {
+    color: #ecf0f1;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    background: #ffffff;
+}

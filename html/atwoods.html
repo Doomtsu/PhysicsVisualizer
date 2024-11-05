@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atwood's Machine Simulator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f5ff;
+            --text-color: #333;
+            --canvas-bg: #ffffff;
+            --control-panel-bg: #e6eeff;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Roboto", Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .canvas-container {
+            background-color: var(--canvas-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .control-panel {
+            background-color: var(--control-panel-bg);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .dark-mode {
+            --bg-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --canvas-bg: #34495e;
+            --control-panel-bg: #2c3e50;
+        }
+        .nav-buttons {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .back-button,
+        #themeToggle {
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .back-button:hover,
+        #themeToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .back-button i,
+        #themeToggle i {
+            font-size: 1.1em;
+        }
+        .dark-mode .back-button,
+        .dark-mode #themeToggle {
+            background-color: #34495e;
+            border-color: #ecf0f1;
+            color: #ecf0f1;
+        }
+        .dark-mode .back-button:hover,
+        .dark-mode #themeToggle:hover {
+            background-color: #2c3e50;
+        }
+        @media (max-width: 768px) {
+            .nav-buttons,
+            .theme-switch {
+                position: relative;
+                top: 0;
+                left: 0;
+                right: 0;
+                margin: 10px;
+            }
+        }
+        .nav-tabs .nav-link {
+            color: var(--text-color);
+        }
+        .nav-tabs .nav-link.active {
+            background-color: var(--control-panel-bg);
+            color: var(--text-color);
+            border-color: #dee2e6 #dee2e6 var(--control-panel-bg);
+        }
+        .dark-mode .nav-tabs .nav-link {
+            color: var(--text-color);
+        }
+        .dark-mode .nav-tabs .nav-link.active {
+            background-color: var(--control-panel-bg);
+            color: var(--text-color);
+            border-color: #4a5568 #4a5568 var(--control-panel-bg);
+        }
+        /* Remove or replace these previous dark mode styles */
+.dark-mode input,
+.dark-mode select {
+    background-color: #2c3e50;
+    border-color: #4a5568;
+    color: #ecf0f1;
+}
+
+.dark-mode input:focus,
+.dark-mode select:focus {
+    background-color: #34495e;
+    border-color: #6c7ae0;
+    color: #ecf0f1;
+}
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="../main.html" class="btn btn-outline-primary back-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+    <div class="theme-switch">
+        <button class="btn btn-outline-primary" id="themeToggle">
+            <i class="fas fa-moon"></i> Toggle Theme
+        </button>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Atwood's Machine Simulator</h1>
+        
+        <ul class="nav nav-tabs" id="atwoodTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="standard-tab" data-bs-toggle="tab" data-bs-target="#standard" type="button" role="tab" aria-controls="standard" aria-selected="true">Standard Atwood's Machine</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="modified-tab" data-bs-toggle="tab" data-bs-target="#modified" type="button" role="tab" aria-controls="modified" aria-selected="false">Modified Atwood's Machine</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="atwoodTabsContent">
+            <!-- Standard Atwood's Machine Tab -->
+            <div class="tab-pane fade show active" id="standard" role="tabpanel" aria-labelledby="standard-tab">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="canvas-container">
+                            <canvas id="standardCanvas" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="control-panel">
+                            <h4>Controls</h4>
+                            <div class="mb-3">
+                                <label for="mass1" class="form-label">Mass 1 (kg)</label>
+                                <input type="number" class="form-control" id="mass1" value="10" min="0.1" step="0.1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="mass2" class="form-label">Mass 2 (kg)</label>
+                                <input type="number" class="form-control" id="mass2" value="5" min="0.1" step="0.1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gravityStandard" class="form-label">Gravity (m/s²)</label>
+                                <input type="range" class="form-range" id="gravityStandard" min="0" max="20" step="0.1" value="9.8">
+                                <span id="gravityValueStandard">9.8</span>
+                            </div>
+                            <button id="playPauseStandard" class="btn btn-primary me-2">Play/Pause</button>
+                            <button id="resetStandard" class="btn btn-secondary">Reset</button>
+                        </div>
+                        <div id="physicsInfoStandard" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modified Atwood's Machine Tab -->
+            <div class="tab-pane fade" id="modified" role="tabpanel" aria-labelledby="modified-tab">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="canvas-container">
+                            <canvas id="modifiedCanvas" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="control-panel">
+                            <h4>Controls</h4>
+                            <div class="mb-3">
+                                <label for="massA" class="form-label">Mass 1 (kg):</label>
+                                <input type="number" class="form-control" id="massA" value="1" min="0.1" step="0.1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="massB" class="form-label">Mass 2 (kg):</label>
+                                <input type="number" class="form-control" id="massB" value="2" min="0.1" step="0.1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="angleModified" class="form-label">Incline Angle (degrees):</label>
+                                <input type="number" class="form-control" id="angleModified" value="30" min="0" max="90" step="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="frictionModified" class="form-label">Coefficient of Friction:</label>
+                                <input type="number" class="form-control" id="frictionModified" value="0.1" min="0" max="1" step="0.01">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gravityModified" class="form-label">Gravity (m/s²):</label>
+                                <input type="range" class="form-range" id="gravityModified" min="0" max="20" step="0.1" value="9.81">
+                                <span id="gravityValueModified">9.81</span>
+                            </div>
+                            <button id="playPauseModified" class="btn btn-primary me-2">Start Simulation</button>
+                            <button id="resetModified" class="btn btn-secondary">Reset</button>
+                        </div>
+                        <div id="physicsInfoModified" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../javascript/atwoods.js"></script>
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+        const body = document.body;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add("dark-mode");
+                themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+            } else {
+                body.classList.remove("dark-mode");
+                themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
+            }
+            localStorage.setItem("darkMode", isDark);
+        }
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem("darkMode");
+        if (savedTheme !== null) {
+            setTheme(savedTheme === "true");
+        }
+
+        // Theme toggle button click handler
+        themeToggle.addEventListener("click", () => {
+            const isDark = !body.classList.contains("dark-mode");
+            setTheme(isDark);
+        });
+
+        // Update gravity value displays
+        const gravityStandard = document.getElementById("gravityStandard");
+        const gravityValueStandard = document.getElementById("gravityValueStandard");
+        gravityStandard.addEventListener("input", () => {
+            gravityValueStandard.textContent = gravityStandard.value;
+        });
+
+        const gravityModified = document.getElementById("gravityModified");
+        const gravityValueModified = document.getElementById("gravityValueModified");
+        gravityModified.addEventListener("input", () => {
+            gravityValueModified.textContent = gravityModified.value;
+        });
+
+        // Initialize both Atwood's Machines
+        document.addEventListener("DOMContentLoaded", () => {
+            const standardCanvas = document.getElementById("standardCanvas");
+            const modifiedCanvas = document.getElementById("modifiedCanvas");
+
+            new StandardAtwoodsMachine(standardCanvas);
+            new ModifiedAtwoodsMachine(modifiedCanvas);
+        });
+    </script>
+</body>
+</html>
