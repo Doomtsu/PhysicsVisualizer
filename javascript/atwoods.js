@@ -26,6 +26,7 @@ class StandardAtwoodsMachine {
         document.getElementById("resetStandard").addEventListener("click", () => this.resetSimulation());
         document.getElementById("gravityStandard").addEventListener("input", (e) => {
             this.speedFactor = parseFloat(e.target.value);
+            this.updatePhysicsInfo();
         });
         document.getElementById("mass1").addEventListener("input", () => this.resetSimulation());
         document.getElementById("mass2").addEventListener("input", () => this.resetSimulation());
@@ -53,8 +54,8 @@ class StandardAtwoodsMachine {
 
     updatePhysics() {
         this.acceleration = ((this.mass2 - this.mass1) / (this.mass1 + this.mass2)) * this.speedFactor;
-        this.velocity += this.acceleration * 0.016;
-        const displacement = this.velocity * 0.016;
+        this.velocity += this.acceleration * 0.001 * this.speedFactor;
+        const displacement = this.velocity * 0.001 * this.speedFactor;
         this.position1 -= displacement;
         this.position2 += displacement;
         this.angle -= displacement / this.pulleyRadius;
