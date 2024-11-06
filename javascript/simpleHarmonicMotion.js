@@ -248,15 +248,14 @@ class SpringOscillator {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw fixed support
+
         this.ctx.fillStyle = '#666';
         this.ctx.fillRect(this.springBaseX - 40, 0, 80, this.springBaseY);
         
-        // Calculate spring end position
+
         const displacement = Math.min(Math.max(this.currentDisplacement, -this.maxDisplacement), this.maxDisplacement);
         const springEndY = this.equilibriumPosition + (displacement * this.pixelsPerMeter);
-        
-        // Draw spring
+
         const numCoils = 20;
         const springAmplitude = 20; 
         
@@ -279,7 +278,7 @@ class SpringOscillator {
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
         
-        // Draw mass (bob)
+ 
         const minBobRadius = 15;
         const maxBobRadius = 30;
         const bobRadius = minBobRadius + (Math.sqrt(this.mass) - 1) * 3;
@@ -293,7 +292,7 @@ class SpringOscillator {
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
         
-        // Draw equilibrium line
+
         this.ctx.beginPath();
         this.ctx.setLineDash([5, 5]);
         this.ctx.moveTo(this.springBaseX - 50, this.equilibriumPosition);
@@ -303,7 +302,7 @@ class SpringOscillator {
         this.ctx.setLineDash([]); 
     }
 }
-// Initialize simulators
+
 const pendulumCanvas = document.getElementById("pendulumCanvas");
 const springCanvas = document.getElementById("springCanvas");
 

@@ -49,12 +49,12 @@ class FluidSimulator {
         const animate = () => {
             this.flowCtx.clearRect(0, 0, 600, 300);
             
-            // Draw pipes
+
             this.flowCtx.fillStyle = '#3498db';
             this.flowCtx.fillRect(0, 150 - pipe1Diameter * 25, 300, pipe1Diameter * 50);
             this.flowCtx.fillRect(300, 150 - pipe2Diameter * 25, 300, pipe2Diameter * 50);
 
-            // Animate particles
+
             this.flowCtx.fillStyle = '#e74c3c';
             particles.forEach(particle => {
                 this.flowCtx.beginPath();
@@ -82,20 +82,20 @@ class FluidSimulator {
         const canvas = document.getElementById('bernoulliCanvas');
         this.bernoulliCtx = canvas.getContext('2d');
         
-        // Add controls and event listeners for Bernoulli's principle
+        
         const simulateBernoulliBtn = document.getElementById('simulateBernoulli');
         simulateBernoulliBtn.addEventListener('click', () => this.animateBernoulli());
     }
 
     animateBernoulli() {
-        // Implement Bernoulli's principle animation
+
         let y = 150;
         let velocity = 2;
 
         const animate = () => {
             this.bernoulliCtx.clearRect(0, 0, 600, 300);
             
-            // Draw tube
+
             this.bernoulliCtx.beginPath();
             this.bernoulliCtx.moveTo(0, 100);
             this.bernoulliCtx.lineTo(200, 100);
@@ -107,7 +107,7 @@ class FluidSimulator {
             this.bernoulliCtx.closePath();
             this.bernoulliCtx.stroke();
 
-            // Animate fluid
+
             this.bernoulliCtx.fillStyle = 'rgba(52, 152, 219, 0.5)';
             this.bernoulliCtx.fillRect(0, y, 600, 200 - y);
 
@@ -124,13 +124,13 @@ class FluidSimulator {
         const canvas = document.getElementById('viscosityCanvas');
         this.viscosityCtx = canvas.getContext('2d');
         
-        // Add controls and event listeners for viscosity simulation
+     
         const simulateViscosityBtn = document.getElementById('simulateViscosity');
         simulateViscosityBtn.addEventListener('click', () => this.animateViscosity());
     }
 
     animateViscosity() {
-        // Implement viscosity animation
+
         let particles = [];
         for (let i = 0; i < 50; i++) {
             particles.push({
@@ -166,26 +166,26 @@ class FluidSimulator {
         const canvas = document.getElementById('pascalCanvas');
         this.pascalCtx = canvas.getContext('2d');
         
-        // Add controls and event listeners for Pascal's principle demonstration
+      
         const simulatePascalBtn = document.getElementById('simulatePascal');
         simulatePascalBtn.addEventListener('click', () => this.animatePascal());
     }
 
     animatePascal() {
-        // Implement Pascal's principle animation
+    
         let pressure = 0;
 
         const animate = () => {
             this.pascalCtx.clearRect(0, 0, 600, 300);
             
-            // Draw container
+    
             this.pascalCtx.strokeRect(50, 50, 500, 200);
 
-            // Draw fluid
+
             this.pascalCtx.fillStyle = 'rgba(52, 152, 219, 0.5)';
             this.pascalCtx.fillRect(50, 250 - pressure, 500, pressure);
 
-            // Draw piston
+
             this.pascalCtx.fillStyle = '#34495e';
             this.pascalCtx.fillRect(250, 20, 100, 30);
 
@@ -202,26 +202,26 @@ class FluidSimulator {
         const canvas = document.getElementById('archimedesCanvas');
         this.archimedesCtx = canvas.getContext('2d');
         
-        // Add controls and event listeners for Archimedes' principle demonstration
+       
         const simulateArchimedesBtn = document.getElementById('simulateArchimedes');
         simulateArchimedesBtn.addEventListener('click', () => this.animateArchimedes());
     }
 
     animateArchimedes() {
-        // Implement Archimedes' principle animation
+
         let buoyancy = 0;
 
         const animate = () => {
             this.archimedesCtx.clearRect(0, 0, 600, 300);
             
-            // Draw container
+
             this.archimedesCtx.strokeRect(50, 50, 500, 200);
 
-            // Draw fluid
+
             this.archimedesCtx.fillStyle = 'rgba(52, 152, 219, 0.5)';
             this.archimedesCtx.fillRect(50, 250 - buoyancy, 500, buoyancy);
 
-            // Draw object
+
             this.archimedesCtx.fillStyle = '#34495e';
             this.archimedesCtx.fillRect(250, 150, 50, 50);
 

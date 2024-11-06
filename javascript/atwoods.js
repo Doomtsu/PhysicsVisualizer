@@ -219,7 +219,6 @@ class ModifiedAtwoodsMachine {
         const pulleyX = originX + 300;
         const pulleyY = originY - 300 * Math.tan((this.angle * Math.PI) / 180);
 
-        // Draw inclined plane
         this.ctx.beginPath();
         this.ctx.moveTo(originX, originY);
         this.ctx.lineTo(pulleyX, pulleyY);
@@ -227,7 +226,6 @@ class ModifiedAtwoodsMachine {
         this.ctx.strokeStyle = "#000";
         this.ctx.stroke();
 
-        // Fill inclined plane
         this.ctx.fillStyle = "#0047ab";
         this.ctx.beginPath();
         this.ctx.moveTo(originX, originY);
@@ -235,7 +233,6 @@ class ModifiedAtwoodsMachine {
         this.ctx.lineTo(pulleyX, originY);
         this.ctx.fill();
 
-        // Draw pulley
         this.ctx.beginPath();
         this.ctx.arc(pulleyX, pulleyY, 20, 0, 2 * Math.PI);
         this.ctx.strokeStyle = "#000";
@@ -244,17 +241,14 @@ class ModifiedAtwoodsMachine {
         const pos = this.position * this.scale;
         const angleRad = (this.angle * Math.PI) / 180;
 
-        // Calculate masses positions
         const mass1X = originX + pos * Math.cos(angleRad);
         const mass1Y = originY - pos * Math.sin(angleRad);
         const mass2X = pulleyX;
         const mass2Y = pulleyY + pos;
 
-        // Draw masses
         this.drawMass(mass1X, mass1Y, "M1");
         this.drawMass(mass2X, mass2Y, "M2");
 
-        // Draw rope
         this.ctx.beginPath();
         this.ctx.moveTo(mass1X, mass1Y);
         this.ctx.lineTo(pulleyX, pulleyY);
@@ -333,7 +327,6 @@ class ModifiedAtwoodsMachine {
     }
 }
 
-// Initialize both Atwood's Machines
 document.addEventListener('DOMContentLoaded', () => {
     const standardCanvas = document.getElementById('standardCanvas');
     const modifiedCanvas = document.getElementById('modifiedCanvas');

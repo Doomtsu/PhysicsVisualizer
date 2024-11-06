@@ -105,7 +105,7 @@
             color: var(--text-color);
             border-color: #4a5568 #4a5568 var(--control-panel-bg);
         }
-        /* Remove or replace these previous dark mode styles */
+      
 .dark-mode input,
 .dark-mode select {
     background-color: #2c3e50;
@@ -146,7 +146,7 @@
         </ul>
         
         <div class="tab-content" id="atwoodTabsContent">
-            <!-- Standard Atwood's Machine Tab -->
+
             <div class="tab-pane fade show active" id="standard" role="tabpanel" aria-labelledby="standard-tab">
                 <div class="row">
                     <div class="col-md-8">
@@ -178,7 +178,7 @@
                 </div>
             </div>
             
-            <!-- Modified Atwood's Machine Tab -->
+
             <div class="tab-pane fade" id="modified" role="tabpanel" aria-labelledby="modified-tab">
                 <div class="row">
                     <div class="col-md-8">
@@ -237,19 +237,19 @@
             localStorage.setItem("darkMode", isDark);
         }
 
-        // Load saved theme preference
+
         const savedTheme = localStorage.getItem("darkMode");
         if (savedTheme !== null) {
             setTheme(savedTheme === "true");
         }
 
-        // Theme toggle button click handler
+
         themeToggle.addEventListener("click", () => {
             const isDark = !body.classList.contains("dark-mode");
             setTheme(isDark);
         });
 
-        // Update gravity value displays
+
         const gravityStandard = document.getElementById("gravityStandard");
         const gravityValueStandard = document.getElementById("gravityValueStandard");
         gravityStandard.addEventListener("input", () => {
@@ -262,7 +262,7 @@
             gravityValueModified.textContent = gravityModified.value;
         });
 
-        // Initialize both Atwood's Machines
+ 
         document.addEventListener("DOMContentLoaded", () => {
             const standardCanvas = document.getElementById("standardCanvas");
             const modifiedCanvas = document.getElementById("modifiedCanvas");
