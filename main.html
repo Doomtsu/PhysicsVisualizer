@@ -13,65 +13,255 @@
             --card-bg: #ffffff;
             --btn-bg: #007bff;
             --btn-color: #ffffff;
+            --primary-color: #2563eb;
+            --secondary-color: #60a5fa;
+            --accent-color: #3b82f6;
+            --transition: all 0.3s ease-in-out;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
         }
 
         body {
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #e0e7ff 100%);
             color: var(--text-color);
             font-family: 'Roboto', Arial, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            transition: var(--transition);
         }
 
         .simulator-card {
             height: 100%;
             display: flex;
             flex-direction: column;
-            background-color: var(--card-bg);
-            transition: background-color 0.3s;
-            margin-bottom: 20px; /* Added spacing between cards */
+            background: linear-gradient(145deg, var(--card-bg) 0%, #f8fafc 100%);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        .simulator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0,0,0,0.1);
         }
 
         .simulator-card .card-body {
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .simulator-card .card-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 0 0 2px 2px;
+            transition: var(--transition);
+        }
+
+        .simulator-card:hover .card-body::before {
+            height: 6px;
         }
 
         .simulator-card .btn {
             margin-top: auto;
-            background-color: var(--btn-bg);
-            border-color: var(--btn-bg);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
             color: var(--btn-color);
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(0);
         }
 
-        .dark-mode {
-            --bg-color: #2c3e50;
-            --text-color: #ecf0f1;
-            --card-bg: #34495e;
-            --btn-bg: #3498db;
-            --btn-color: #ffffff;
+        .simulator-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .simulator-card .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .simulator-card .card-title i {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .simulator-card:hover .card-title i {
+            transform: scale(1.1);
+        }
+
+        .simulator-card .card-text {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
         .theme-switch {
             position: fixed;
             top: 20px;
             right: 20px;
+            z-index: 100;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         #themeToggle {
-            background-color: var(--btn-bg);
-            border-color: var(--btn-bg);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
             color: var(--btn-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
 
-        #collisionTypeToggle {
-            margin-right: 10px;
-            transition: background-color 0.3s;
+        #themeToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
-        #collisionTypeToggle:hover {
-            background-color: #4a4a4a;
+        .dark-mode {
+            --bg-color: #1e293b;
+            --text-color: #f1f5f9;
+            --card-bg: #334155;
+            --btn-bg: #3b82f6;
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --accent-color: #2563eb;
+            --shadow-sm: 0 2px 4px rgba(255,255,255,0.05);
+            --shadow-md: 0 4px 6px rgba(255,255,255,0.1);
+            --shadow-lg: 0 10px 15px rgba(255,255,255,0.1);
+        }
+
+        .dark-mode .simulator-card {
+            background: linear-gradient(145deg, var(--card-bg) 0%, #475569 100%);
+        }
+
+        .dark-mode .simulator-card .card-body::before {
+            background: var(--primary-color);
+        }
+
+        .dark-mode .simulator-card .btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .dark-mode .simulator-card .card-title i {
+            color: var(--primary-color);
+        }
+
+        .dark-mode .simulator-card .card-text {
+            color: #94a3b8;
+        }
+
+        .container {
+            max-width: 1200px;
+            padding: 0 1rem;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            text-shadow: var(--shadow-sm);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .row {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .simulator-card {
+            animation: slideUp 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .simulator-card:nth-child(1) { animation-delay: 0.2s; }
+        .simulator-card:nth-child(2) { animation-delay: 0.3s; }
+        .simulator-card:nth-child(3) { animation-delay: 0.4s; }
+        .simulator-card:nth-child(4) { animation-delay: 0.5s; }
+        .simulator-card:nth-child(5) { animation-delay: 0.6s; }
+        .simulator-card:nth-child(6) { animation-delay: 0.7s; }
+        .simulator-card:nth-child(7) { animation-delay: 0.8s; }
+        .simulator-card:nth-child(8) { animation-delay: 0.9s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .simulator-card {
+                margin-bottom: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .simulator-card .card-body {
+                padding: 1rem;
+            }
+
+            .simulator-card .btn {
+                padding: 0.5rem 1rem;
+            }
         }
     </style>
 </head>
